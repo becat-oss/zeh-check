@@ -22,7 +22,7 @@ export default function IndexView() {
           <MenuCard
             title="ZEH確認ツール"
             description="一次エネルギー消費量計算結果を元にZEHの条件を満たしているかを確認するツール"
-            href="/ZEH/check"
+            href="/ZEH/check-condition"
             img="/images/iRDT/iRDT.jpg"
           />
         </Grid>

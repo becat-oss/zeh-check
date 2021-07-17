@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider>
       <CssBaseline />
       <Head>
-        <title>iRDT Tool Test</title>
+        <title>BeCAT Tool Test</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />

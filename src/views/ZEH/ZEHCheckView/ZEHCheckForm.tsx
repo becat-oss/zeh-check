@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { createStyles, FormControl, TextField } from "@material-ui/core";
-import { useZEHCheckViewContext } from "./ZEHCheckViewContext";
+import { useZEHCheckViewContext, rowData } from "./ZEHCheckViewContext";
 import { keyColumn, textColumn, DataSheetGrid } from "react-datasheet-grid";
 import DataSheet from "src/components/DataSheet";
 
@@ -32,35 +32,53 @@ type Data = {
     base: number | null;
 }[]
 
-type Category = 'heating'|'cooling'|'ventilation';
+type Category = 'heating'|'cooling'|'ventilation'|'hotwater'|'lighting';
 
 type Case = 'design' | 'base';
 
 interface DataSource {
-    heating: number | null;
-    cooling: number | null;
-    baseHeating: number | null;
-    baseCooling: number | null;
+    heating: rowData;
+    cooling: rowData;
+    ventilation: rowData;
+    hotwater: rowData;
+    lighting: rowData;
 }
 
 const createData = (source: DataSource): Data => {
     const data: Data =[];
     console.log(source);
-    data.push({category:'heating',design:source.heating,base:source.baseHeating});
-    data.push({category:'cooling',design:source.cooling,base:source.baseCooling});
-    
+    data.push({category:'heating', ...source.heating});
+    data.push({category:'cooling', ...source.cooling});
+    data.push({category:'ventilation', ...source.ventilation});
+    data.push({category:'hotwater', ...source.hotwater});
+    data.push({category:'lighting', ...source.lighting});
+    //console.log('data',data);
     return data;
 };
 
-function fromData(data: Data,category: Category, designCase:Case):number{
+function fromData(data: Data,category: Category):rowData{
     const values = data.filter(
         dataset => dataset.category === category,
+    ).map((d)=>{
+        return {design:Number(d.design),base:Number(d.base)};
+        },
     );
-    return values[designCase];
+    return values[0];
 }
 
-const ResultForm: React.VFC=() => {
-    const{ heating, setHeating,cooling, setCooling,baseHeating,setBaseHeating, baseCooling,setBaseCooling }=useZEHCheckViewContext();
+const ZEHCheckForm: React.VFC=() => {
+    const{ 
+        heating, 
+        setHeating,
+        cooling, 
+        setCooling,
+        ventilation,
+        setVentilation,
+        hotwater,
+        setHotwater,
+        lighting,
+        setLighting,
+     }=useZEHCheckViewContext();
     // const [data,setData]=useState<Data>(
     //     [
     //         {category: '暖房設備',design:1000,base:1200},
@@ -72,8 +90,9 @@ const ResultForm: React.VFC=() => {
         createData({
             heating,
             cooling,
-            baseHeating,
-            baseCooling,
+            ventilation,
+            hotwater,
+            lighting,
         }),
     );
 
@@ -86,12 +105,13 @@ const ResultForm: React.VFC=() => {
     const handleChange=useCallback(
         (values:Data) =>{
             setData(values);
-            setHeating(fromData(values,'heating','design'));
-            setCooling(fromData(values,'cooling','design'));
-            setBaseHeating(fromData(values,'heating','base'));
-            setBaseCooling(fromData(values,'cooling','base'));
+            setHeating(fromData(values,'heating'));
+            setCooling(fromData(values,'cooling'));
+            setVentilation(fromData(values,'ventilation'));
+            setHotwater(fromData(values,'hotwater'));
+            setLighting(fromData(values,'lighting'));
         },
-        [setHeating,setCooling,setBaseHeating,setBaseCooling],
+        [setHeating,setCooling,ventilation,hotwater,lighting],
     );
 
     return(
@@ -101,4 +121,4 @@ const ResultForm: React.VFC=() => {
     );
 };
 
-export default ResultForm;
+export default ZEHCheckForm;

@@ -1,74 +1,68 @@
-import React, { useState, useMemo, useContext } from "react";
+import React, { useState, useMemo, useContext, useEffect } from "react";
+import { EnergyReduction } from "src/tools/ZEH";
+
+export type rowData={
+    design: number | null;
+    base: number | null;
+}
 
 interface ZEHCheckViewState {
-    heating: number|null;
-    setHeating:(heating: number|null) => void;
-    cooling: number|null;
-    setCooling:(cooling: number|null) => void;
-    ventilation: number|null;
-    setVentilation:(ventilation: number|null) => void;
-    hotwater: number|null;
-    setHotwater:(hotwater: number|null) => void;
-    lighting: number|null;
-    setLighting:(lighting: number|null) => void;
+    heating: rowData;
+    setHeating:(heating: rowData) => void;
+    cooling: rowData;
+    setCooling:(cooling: rowData) => void;
+    ventilation: rowData;
+    setVentilation:(ventilation: rowData) => void;
+    hotwater: rowData;
+    setHotwater:(hotwater: rowData) => void;
+    lighting: rowData;
+    setLighting:(lighting: rowData) => void;
     others: number|null;
     setOthers:(others: number|null) => void;
     generation: number|null;
     setGeneration:(generation: number|null) => void;
 
-    baseHeating: number|null;
-    setBaseHeating:(baseHeating: number|null) => void;
-    baseCooling: number|null;
-    setBaseCooling:(baseCooling: number|null) => void;
-    // baseVentilation: number|null;
-    // setBaseVentilation:(baseVentilation: number|null) => void;
-    // baseHotwater: number|null;
-    // setBaseHotwater:(baseHotwater: number|null) => void;
-    // baseLighting: number|null;
-    // setBaseLighting:(baseLighting: number|null) => void;
-    // baseOthers: number|null;
-    // setBaseOthers:(baseOthers: number|null) => void;
-    // baseGeneration: number|null;
-    // setBaseGeneration:(baseGeneration: number|null) => void;
+    energyReduction:number|null;
+    setEnergyReduction:(energyReduction: number|null) => void;
+    passEnergyReduction:boolean;
+    setPassEnergyReduction:(passEnergyReduction:boolean) => void;
 }
 
 const initialState: ZEHCheckViewState={
-    heating:1000,
+    heating: {design:1000,base:1200},
     setHeating:() => {},
-    cooling: 1000,
+    cooling: {design:1000,base:1200},
     setCooling:() => {},
-    ventilation: null,
+    ventilation: {design:1000,base:1200},
     setVentilation:() => {},
-    hotwater: null,
+    hotwater: {design:1000,base:1200},
     setHotwater:() => {},
-    lighting: null,
+    lighting: {design:600,base:1200},
     setLighting:() => {},
     others: null,
     setOthers:() => {},
     generation: null,
     setGeneration:() => {},
-
-    baseHeating: 1000,
-    setBaseHeating:() => {},
-    baseCooling: 1000,
-    setBaseCooling:() => {},
-    // baseVentilation: null,
-    // setBaseVentilation:() => {},
-    // baseHotwater: null,
-    // setBaseHotwater:() => {},
-    // baseLighting: null,
-    // setBaseLighting:() => {},
-    // baseOthers: null,
-    // setBaseOthers:() => {},
-    // baseGeneration: null,
-    // setBaseGeneration:() => {},
-}
+    energyReduction:null,
+    setEnergyReduction:() => {},
+    passEnergyReduction:false,
+    setPassEnergyReduction:() => {},
+};
 
 export const ZEHCheckViewContext = React.createContext<ZEHCheckViewState>(initialState);
 
 interface ZEHCheckViewProviderProps {
     children: React.ReactNode;
 }
+
+export interface EnergyReductionInput{
+    heating:rowData;
+    cooling:rowData;
+    ventilation: rowData;
+    hotwater: rowData;
+    lighting: rowData;
+}
+
 export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React.ReactElement{
     const [heating,setHeating]=useState(initialState.heating);
     const [cooling,setCooling]=useState(initialState.cooling);
@@ -77,9 +71,26 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
     const [lighting,setLighting]=useState(initialState.lighting);
     const [others,setOthers]=useState(initialState.others);
     const [generation,setGeneration]=useState(initialState.generation);
+    const [energyReduction,setEnergyReduction]=useState(initialState.energyReduction);
+    const [passEnergyReduction,setPassEnergyReduction]=useState(initialState.passEnergyReduction);
 
-    const [baseHeating,setBaseHeating]=useState(initialState.baseHeating);
-    const [baseCooling,setBaseCooling]=useState(initialState.baseCooling);
+    useEffect(()=>{
+        const result=EnergyReduction({
+            heating: heating,
+            cooling: cooling,
+            ventilation: ventilation,
+            hotwater: hotwater,
+            lighting: lighting,
+        });
+
+        const checkEnergyReduction = result>=20 ? true: false;
+
+        console.log('reduction',result,checkEnergyReduction);
+
+        setEnergyReduction(result);
+        setPassEnergyReduction(checkEnergyReduction);
+
+    },[heating,cooling,ventilation,hotwater,lighting,energyReduction]);
 
     const ZEHCheckViewState = useMemo(()=>{
         return{
@@ -97,14 +108,18 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             setOthers,
             generation,
             setGeneration,
-            baseHeating,
-            setBaseHeating,
-            baseCooling,
-            setBaseCooling,
+            energyReduction,
+            setEnergyReduction,
+            passEnergyReduction,
+            setPassEnergyReduction,
+            // baseHeating,
+            // setBaseHeating,
+            // baseCooling,
+            // setBaseCooling,
         };
-    },[heating,cooling,ventilation,hotwater,lighting,others,generation,baseHeating,baseCooling]);
+    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction]);
 
-    return <ZEHCheckViewContext.Provider value={ZEHCheckViewState}>{children}</ZEHCheckViewContext.Provider>
+    return <ZEHCheckViewContext.Provider value={ZEHCheckViewState}>{children}</ZEHCheckViewContext.Provider>;
 }
 
 export function useZEHCheckViewContext():ZEHCheckViewState{

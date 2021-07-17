@@ -15,7 +15,7 @@ export default function Copyright(): React.ReactElement {
       style={{ textDecoration: 'none', display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', flexDirection: 'column', padding: theme.spacing(1) }}
     >
       <Typography variant="body2" color="textSecondary" align={matches ? 'right' : 'left'} style={{ marginTop: theme.spacing(1) }}>
-        Copyright &copy; {date.getFullYear()} Aseismic Device Co., Ltd.
+        Copyright &copy; {date.getFullYear()} BeCAT.
       </Typography>
     </a>
   );

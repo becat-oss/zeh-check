@@ -45,7 +45,7 @@ export default function Footer(): React.ReactElement {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
             <MuiLink
-              href="https://adc21.com"
+              href="https://becat.kyushu-u.ac.jp/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -54,11 +54,11 @@ export default function Footer(): React.ReactElement {
                 component="h3"
                 className={classes.link}
               >
-                ADC
+                BeCAT
               </Typography>
             </MuiLink>
             <MuiLink
-              href="https://github.com/adc21"
+              href="https://github.com/katsuya0719/eppy"
               target="_blank"
               rel="noopener noreferrer"
             >

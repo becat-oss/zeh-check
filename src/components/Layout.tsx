@@ -56,7 +56,7 @@ export default function Layout({ children }: Props) {
           </IconButton>
           <Link href="/">
             <Typography variant="h6" className={classes.title}>
-              ADC Tools
+              BeCAT
             </Typography>
           </Link>
         </Toolbar>
