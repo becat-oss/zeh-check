@@ -23,31 +23,23 @@ export default function IndexView() {
             title="ZEH確認ツール"
             description="一次エネルギー消費量計算結果を元にZEHの条件を満たしているかを確認するツール"
             href="/ZEH/check-condition"
-            img="/images/iRDT/iRDT.jpg"
+            img="/images/ZEH/zeh.jpeg"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <MenuCard
-            title="iRDT最適解 - 多質点系"
-            description="建物に合わせたiRDTの最適値を算出するツール"
+            title="xxxx"
+            description="xxxx"
             href="/iRDT/mdof-opt-params"
-            img="/images/iRDT/iRDT.jpg"
+            img="/images/ZEH/zeh.jpeg"
           />
         </Grid>
         <Grid item xs={12} sm={4}>
           <MenuCard
-            title="iRDT最適解 - 多質点系"
-            description="建物に合わせたiRDTの最適値を算出するツール"
+            title="yyyyy"
+            description="yyyyyy"
             href="/VDW/force"
-            img="/images/iRDT/iRDT.jpg"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <MenuCard
-            title="iRDT最適解 - 多質点系"
-            description="建物に合わせたiRDTの最適値を算出するツール"
-            href="/VDW/weight"
-            img="/images/iRDT/iRDT.jpg"
+            img="/images/ZEH/zeh.jpeg"
           />
         </Grid>
       </Grid>
