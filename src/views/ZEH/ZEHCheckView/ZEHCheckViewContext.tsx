@@ -26,6 +26,11 @@ interface ZEHCheckViewState {
     setEnergyReduction:(energyReduction: number|null) => void;
     passEnergyReduction:boolean;
     setPassEnergyReduction:(passEnergyReduction:boolean) => void;
+
+    uvalue:number|null;
+    setUvalue:(uvalue:number|null)=>void;
+    passUvalue:boolean;
+    setPassUvalue:(passUvalue:boolean)=>void;
 }
 
 const initialState: ZEHCheckViewState={
@@ -43,10 +48,16 @@ const initialState: ZEHCheckViewState={
     setOthers:() => {},
     generation: null,
     setGeneration:() => {},
+
     energyReduction:null,
     setEnergyReduction:() => {},
     passEnergyReduction:false,
     setPassEnergyReduction:() => {},
+
+    uvalue:0.6,
+    setUvalue:()=>{},
+    passUvalue:true,
+    setPassUvalue:()=>{},
 };
 
 export const ZEHCheckViewContext = React.createContext<ZEHCheckViewState>(initialState);
@@ -73,6 +84,8 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
     const [generation,setGeneration]=useState(initialState.generation);
     const [energyReduction,setEnergyReduction]=useState(initialState.energyReduction);
     const [passEnergyReduction,setPassEnergyReduction]=useState(initialState.passEnergyReduction);
+    const [uvalue,setUvalue]=useState(initialState.uvalue);
+    const [passUvalue,setPassUvalue]=useState(initialState.passUvalue);
 
     useEffect(()=>{
         const result=EnergyReduction({
@@ -84,8 +97,6 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
         });
 
         const checkEnergyReduction = result>=20 ? true: false;
-
-        console.log('reduction',result,checkEnergyReduction);
 
         setEnergyReduction(result);
         setPassEnergyReduction(checkEnergyReduction);
@@ -112,12 +123,12 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             setEnergyReduction,
             passEnergyReduction,
             setPassEnergyReduction,
-            // baseHeating,
-            // setBaseHeating,
-            // baseCooling,
-            // setBaseCooling,
+            uvalue,
+            setUvalue,
+            passUvalue,
+            setPassUvalue,
         };
-    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction]);
+    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction,uvalue,passUvalue]);
 
     return <ZEHCheckViewContext.Provider value={ZEHCheckViewState}>{children}</ZEHCheckViewContext.Provider>;
 }
