@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useContext, useEffect } from "react";
-import { EnergyReduction } from "src/tools/ZEH";
+import { CalcSubTotal } from "src/tools/ZEH";
 
 export type rowData={
     design: number | null;
@@ -22,6 +22,9 @@ interface ZEHCheckViewState {
     generation: number|null;
     setGeneration:(generation: number|null) => void;
 
+    subTotal: rowData;
+    setSubTotal:(subTotal: rowData)=>void;
+
     energyReduction:number|null;
     setEnergyReduction:(energyReduction: number|null) => void;
     passEnergyReduction:boolean;
@@ -31,6 +34,15 @@ interface ZEHCheckViewState {
     setUvalue:(uvalue:number|null)=>void;
     passUvalue:boolean;
     setPassUvalue:(passUvalue:boolean)=>void;
+
+    generationPercentage: number;
+    setGenerationPercentage:(generationPercentage: number) => void;
+    passNearlyZEH:boolean;
+    setPassNearlyZEH:(passNearlyZEH:boolean)=>void;
+    passZEH:boolean;
+    setPassZEH:(passZEH:boolean)=>void;
+    grade: ZEHgrade;
+    setGrade:(grade: ZEHgrade)=>void;
 }
 
 const initialState: ZEHCheckViewState={
@@ -46,8 +58,11 @@ const initialState: ZEHCheckViewState={
     setLighting:() => {},
     others: null,
     setOthers:() => {},
-    generation: null,
+    generation: 0,
     setGeneration:() => {},
+
+    subTotal: {design:4600,base:6000},
+    setSubTotal:() => {},
 
     energyReduction:null,
     setEnergyReduction:() => {},
@@ -58,6 +73,15 @@ const initialState: ZEHCheckViewState={
     setUvalue:()=>{},
     passUvalue:true,
     setPassUvalue:()=>{},
+
+    generationPercentage: 0,
+    setGenerationPercentage:() => {},
+    passNearlyZEH:false,
+    setPassNearlyZEH:() => {},
+    passZEH:false,
+    setPassZEH:()=>{},
+    grade: 'ZEH oriented',
+    setGrade:() => {},
 };
 
 export const ZEHCheckViewContext = React.createContext<ZEHCheckViewState>(initialState);
@@ -74,6 +98,15 @@ export interface EnergyReductionInput{
     lighting: rowData;
 }
 
+export interface ZEHconditions{
+    passUvalue:boolean;
+    passEnergyReduction:boolean;
+    passNearlyZEH:boolean;
+    passZEH:boolean;
+}
+
+export type ZEHgrade='ZEH'|'nearly ZEH'|'ZEH oriented'|'未達成'
+
 export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React.ReactElement{
     const [heating,setHeating]=useState(initialState.heating);
     const [cooling,setCooling]=useState(initialState.cooling);
@@ -86,9 +119,14 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
     const [passEnergyReduction,setPassEnergyReduction]=useState(initialState.passEnergyReduction);
     const [uvalue,setUvalue]=useState(initialState.uvalue);
     const [passUvalue,setPassUvalue]=useState(initialState.passUvalue);
+    const [subTotal,setSubTotal]=useState(initialState.subTotal);
+    const [generationPercentage,setGenerationPercentage]=useState(initialState.generationPercentage);
+    const [passNearlyZEH,setPassNearlyZEH]=useState(initialState.passNearlyZEH);
+    const [passZEH,setPassZEH]=useState(initialState.passZEH);
+    const [grade,setGrade]=useState(initialState.grade);
 
     useEffect(()=>{
-        const result=EnergyReduction({
+        const result=CalcSubTotal({
             heating: heating,
             cooling: cooling,
             ventilation: ventilation,
@@ -96,12 +134,33 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             lighting: lighting,
         });
 
-        const checkEnergyReduction = result>=20 ? true: false;
+        setSubTotal(result);
+        
+        const reduction = Math.round((result.base-result.design)/result.base*100*10)/10;
+        const checkEnergyReduction = reduction>=20 ? true: false;
 
-        setEnergyReduction(result);
+        setEnergyReduction(reduction);
         setPassEnergyReduction(checkEnergyReduction);
 
     },[heating,cooling,ventilation,hotwater,lighting,energyReduction]);
+
+    useEffect(()=>{
+        const checkUvalue = uvalue<=0.6 ? true:false;
+        setPassUvalue(checkUvalue);
+    },[uvalue]);
+
+    useEffect(()=>{
+
+        const percentage=generation!=0? Math.round(subTotal.design/generation*100):0;
+        const checkNearlyZEH = percentage>=75 ? true:false;
+        const checkZEH = percentage>=100 ? true:false;
+
+        console.log('percentage',percentage);
+        setGenerationPercentage(percentage);
+        setPassNearlyZEH(checkNearlyZEH);
+        setPassZEH(checkZEH);
+
+    },[subTotal,generation]);
 
     const ZEHCheckViewState = useMemo(()=>{
         return{
@@ -119,6 +178,9 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             setOthers,
             generation,
             setGeneration,
+
+            subTotal,
+            setSubTotal,
             energyReduction,
             setEnergyReduction,
             passEnergyReduction,
@@ -127,8 +189,17 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             setUvalue,
             passUvalue,
             setPassUvalue,
+
+            generationPercentage,
+            setGenerationPercentage,
+            passNearlyZEH,
+            setPassNearlyZEH,
+            passZEH,
+            setPassZEH,
+            grade,
+            setGrade,
         };
-    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction,uvalue,passUvalue]);
+    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction,uvalue,passUvalue,passNearlyZEH,passZEH,grade]);
 
     return <ZEHCheckViewContext.Provider value={ZEHCheckViewState}>{children}</ZEHCheckViewContext.Provider>;
 }

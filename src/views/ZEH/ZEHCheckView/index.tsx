@@ -30,8 +30,8 @@ export default function ZEHCheckView(){
 
                 </Section>
                 <Section title="結果">
-                    <EnergyChart />
                     <ZEHCheckResults />
+                    <EnergyChart />
                 </Section>
             </Layout>
         </ZEHCheckViewProvider>
