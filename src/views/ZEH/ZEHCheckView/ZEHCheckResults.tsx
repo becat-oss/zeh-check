@@ -80,6 +80,7 @@ const ZEHCheckResults: React.VFC=()=>{
     ];
 
     useEffect(()=>{
+        console.log('generationPercentage',generationPercentage);
         setData(
             createData({
             uvalue,

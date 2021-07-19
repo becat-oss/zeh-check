@@ -151,7 +151,7 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
 
     useEffect(()=>{
 
-        const percentage=generation!=0? Math.round(subTotal.design/generation*100):0;
+        const percentage=generation!=0? Math.round(generation/subTotal.design*100):0;
         const checkNearlyZEH = percentage>=75 ? true:false;
         const checkZEH = percentage>=100 ? true:false;
 
@@ -199,7 +199,7 @@ export function ZEHCheckViewProvider({children}:ZEHCheckViewProviderProps):React
             grade,
             setGrade,
         };
-    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction,uvalue,passUvalue,passNearlyZEH,passZEH,grade]);
+    },[heating,cooling,ventilation,hotwater,lighting,others,generation,energyReduction,passEnergyReduction,uvalue,passUvalue,passNearlyZEH,passZEH,grade,generationPercentage]);
 
     return <ZEHCheckViewContext.Provider value={ZEHCheckViewState}>{children}</ZEHCheckViewContext.Provider>;
 }
