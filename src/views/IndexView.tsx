@@ -28,18 +28,10 @@ export default function IndexView() {
         </Grid>
         <Grid item xs={12} sm={4}>
           <MenuCard
-            title="xxxx"
-            description="xxxx"
-            href="/iRDT/mdof-opt-params"
-            img="/images/ZEH/zeh.jpeg"
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <MenuCard
-            title="yyyyy"
-            description="yyyyyy"
-            href="/VDW/force"
-            img="/images/ZEH/zeh.jpeg"
+            title="Coming soon"
+            description="You can come up some idea and talk to us"
+            href=""
+            img="/images/ZEH/becat.jpeg"
           />
         </Grid>
       </Grid>

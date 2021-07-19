@@ -1,15 +1,23 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-zehcheck-dev-103817-authRole",
-      "UnauthRoleArn": "arn:aws:iam::712015249956:role/amplify-zehcheck-dev-103817-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::712015249956:role/amplify-zehcheck-dev-103817-authRole",
-      "Region": "ap-northeast-1",
-      "DeploymentBucketName": "amplify-zehcheck-dev-103817-deployment",
-      "UnauthRoleName": "amplify-zehcheck-dev-103817-unauthRole",
-      "StackName": "amplify-zehcheck-dev-103817",
-      "StackId": "arn:aws:cloudformation:ap-northeast-1:712015249956:stack/amplify-zehcheck-dev-103817/004087d0-e832-11eb-ac4d-0add58faceed",
-      "AmplifyAppId": "d8uwe4i409lvg"
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-zehcheck-dev-103817-authRole",
+            "UnauthRoleArn": "arn:aws:iam::712015249956:role/amplify-zehcheck-dev-103817-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::712015249956:role/amplify-zehcheck-dev-103817-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "amplify-zehcheck-dev-103817-deployment",
+            "UnauthRoleName": "amplify-zehcheck-dev-103817-unauthRole",
+            "StackName": "amplify-zehcheck-dev-103817",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:712015249956:stack/amplify-zehcheck-dev-103817/004087d0-e832-11eb-ac4d-0add58faceed",
+            "AmplifyAppId": "d8uwe4i409lvg"
+        },
+        "categories": {
+            "hosting": {
+                "amplifyhosting": {
+                    "appId": "d8uwe4i409lvg",
+                    "type": "cicd"
+                }
+            }
+        }
     }
-  }
 }

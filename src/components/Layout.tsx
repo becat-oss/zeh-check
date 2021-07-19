@@ -51,9 +51,6 @@ export default function Layout({ children }: Props) {
     <div className={classes.root}>
       <AppBar position="static" elevation={0}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
-            <MenuIcon />
-          </IconButton>
           <Link href="/">
             <Typography variant="h6" className={classes.title}>
               BeCAT
@@ -61,9 +58,6 @@ export default function Layout({ children }: Props) {
           </Link>
         </Toolbar>
       </AppBar>
-      <Drawer anchor='left' open={open} onClose={closeDrawer}>
-        <NavigationList onClose={closeDrawer} />
-      </Drawer>
       <Container maxWidth="md" className={classes.main}>
         {children}
       </Container>

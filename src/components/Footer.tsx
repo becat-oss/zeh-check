@@ -57,19 +57,6 @@ export default function Footer(): React.ReactElement {
                 BeCAT
               </Typography>
             </MuiLink>
-            <MuiLink
-              href="https://github.com/katsuya0719/eppy"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Typography
-                variant="subtitle1"
-                component="h3"
-                className={classes.link}
-              >
-                Github
-              </Typography>
-            </MuiLink>
             <Link href="/terms">
               <Typography
                 variant="subtitle1"
