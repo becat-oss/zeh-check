@@ -9,7 +9,8 @@ type Data = {
     base: number | null;
 }[]
 
-type Category = 'heating'|'cooling'|'ventilation'|'hotwater'|'lighting';
+//type Category = 'heating'|'cooling'|'ventilation'|'hotwater'|'lighting';
+type Category = '暖房設備'|'冷房設備'|'換気設備'|'給湯設備'|'照明設備';
 
 type Case = 'design' | 'base';
 
@@ -24,11 +25,11 @@ interface DataSource {
 const createData = (source: DataSource): Data => {
     const data: Data =[];
     console.log(source);
-    data.push({category:'heating', ...source.heating});
-    data.push({category:'cooling', ...source.cooling});
-    data.push({category:'ventilation', ...source.ventilation});
-    data.push({category:'hotwater', ...source.hotwater});
-    data.push({category:'lighting', ...source.lighting});
+    data.push({category:'暖房設備', ...source.heating});
+    data.push({category:'冷房設備', ...source.cooling});
+    data.push({category:'換気設備', ...source.ventilation});
+    data.push({category:'給湯設備', ...source.hotwater});
+    data.push({category:'照明設備', ...source.lighting});
     return data;
 };
 
@@ -75,11 +76,11 @@ const ZEHCheckForm: React.VFC=() => {
     const handleChange=useCallback(
         (values:Data) =>{
             setData(values);
-            setHeating(fromData(values,'heating'));
-            setCooling(fromData(values,'cooling'));
-            setVentilation(fromData(values,'ventilation'));
-            setHotwater(fromData(values,'hotwater'));
-            setLighting(fromData(values,'lighting'));
+            setHeating(fromData(values,'暖房設備'));
+            setCooling(fromData(values,'冷房設備'));
+            setVentilation(fromData(values,'換気設備'));
+            setHotwater(fromData(values,'給湯設備'));
+            setLighting(fromData(values,'照明設備'));
         },
         [setHeating,setCooling,ventilation,hotwater,lighting],
     );
