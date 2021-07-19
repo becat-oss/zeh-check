@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, Input, InputAdornment, makeStyles, Theme, createStyles, TextField } from "@material-ui/core";
+import { FormControl, Input, InputAdornment, makeStyles, Theme, createStyles, TextField, FilledInput } from "@material-ui/core";
 import { useZEHCheckViewContext } from "./ZEHCheckViewContext";
 
 const useStyles=makeStyles((theme:Theme)=>
@@ -22,6 +22,7 @@ export default function ZEHCheckField(){
                 <TextField 
                     id="pv-generation"
                     label="2.PV発電量"
+                    type="number"
                     value={generation}
                     InputProps={{
                         'aria-label': 'PV',
@@ -34,6 +35,7 @@ export default function ZEHCheckField(){
                     id="uvalue"
                     label="3.外皮平均熱貫流率"
                     value={uvalue}
+                    type="number"
                     InputProps={{
                         'aria-label': 'uvalue',
                         endAdornment:<InputAdornment position="end">W/m2K</InputAdornment>,
