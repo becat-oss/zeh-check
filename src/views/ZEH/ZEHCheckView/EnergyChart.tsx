@@ -35,7 +35,7 @@ const options = {
     xAxes: [
       {
         stacked:true,
-        barThickness: 50,
+        barPercentage: 0.2,
       },
     ],
   },

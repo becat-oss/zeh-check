@@ -74,8 +74,8 @@ const ZEHCheckResults: React.VFC=()=>{
 
     const columns =[
         { ...keyColumn('category', textColumn), title: 'チェック項目', disabled: true, minWidth:350 },
-        { ...keyColumn('design', textColumn), title: '設計案', disabled: true },
         { ...keyColumn('standard', textColumn), title: '基準', disabled: true},
+        { ...keyColumn('design', textColumn), title: '設計案', disabled: true },
         { ...keyColumn('pass', textColumn), title: '結果', disabled: true },
     ];
 
