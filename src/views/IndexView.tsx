@@ -3,6 +3,9 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Layout from "src/components/Layout";
 import MenuCard from "src/components/MenuCard";
+import { API, graphqlOperation } from 'aws-amplify';
+import { createTodo } from "src/graphql/mutations";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,9 +31,9 @@ export default function IndexView() {
         </Grid>
         <Grid item xs={12} sm={4}>
           <MenuCard
-            title="Coming soon"
+            title="IFCツール"
             description="You can come up some idea and talk to us"
-            href=""
+            href="/IFC/ifc"
             img="/images/ZEH/becat.jpeg"
           />
         </Grid>

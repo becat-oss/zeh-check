@@ -11,7 +11,6 @@ const createData =(labels=[],data:EnergyReductionInput)=>{
       return jp[label];
     }),
     datasets:Object.entries(data).map(([label, dataset])=>{
-      console.log('createdata',label,dataset);
       return{
         stack:"",
         data:Object.values(dataset).reverse(),
@@ -26,6 +25,10 @@ const options = {
   scales: {
     yAxes: [
       {
+        scaleLabel:{
+          display: true,
+          labelString: '一次消費エネルギー量[MJ]',
+        },
         stacked: true,
         ticks: {
           beginAtZero: true,
@@ -35,7 +38,7 @@ const options = {
     xAxes: [
       {
         stacked:true,
-        barPercentage: 0.2,
+        maxBarThickness: 8,
       },
     ],
   },
@@ -57,21 +60,8 @@ export default function EnergyChart () {
             hotwater:hotwater,
             lighting: lighting,
           })} 
-          options={options} />
+        options={options} />
     </>
   );
 }
 
-
-
-
-
-// export default function EnergyChart(){
-//     const{ heating,cooling,ventilation,hotwater,lighting}=useZEHCheckViewContext();
-
-//     return(
-//         <>
-
-//         </>
-//     )
-// }

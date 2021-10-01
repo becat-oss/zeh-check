@@ -1,0 +1,21 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type result @model {
+  id: ID!
+  name: String!
+  heating: Float
+  cooling: Float
+  ventilation: Float
+  hotwater: Float
+  lighting: Float
+  others: Float
+  generation: Float
+  energyReduction: Float
+  uValue: Float
+  generationPercentage: Float
+}
+
